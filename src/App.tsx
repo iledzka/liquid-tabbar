@@ -13,6 +13,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Feather';
 import LiquidTabBar from './LiquidTabBar';
 import {SettingsScreen} from './SettingsScreen';
+import {BezierSlider} from './bezierSlider';
 
 function HomeScreen() {
   return (
@@ -31,11 +32,7 @@ function HomeScreen() {
 // }
 
 function HeartScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Heart!</Text>
-    </View>
-  );
+  return <BezierSlider />;
 }
 
 function UserScreen() {
@@ -64,11 +61,18 @@ const App = () => {
               } else if (route.name === 'Heart') {
                 return <Icon name="heart" size={size} color={color} />;
               } else if (route.name === 'User') {
-                return <Icon name="user" size={size} color={color} />;
+                return (
+                  <Icon
+                    name="user"
+                    strokeWidth={20}
+                    size={size}
+                    color={color}
+                  />
+                );
               }
             },
-            tabBarActiveTintColor: 'tomato',
-            tabBarInactiveTintColor: 'gray',
+            tabBarActiveTintColor: '#003153',
+            tabBarInactiveTintColor: '#b2beb5',
           })}>
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Settings" component={SettingsScreen} />
@@ -79,24 +83,5 @@ const App = () => {
     </SafeAreaProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

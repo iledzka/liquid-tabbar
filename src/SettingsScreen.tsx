@@ -56,9 +56,6 @@ export const SettingsScreen = () => {
     console.log({v});
   });
 
-  const paint = Skia.Paint();
-  paint.setColor(Skia.Color('lightblue'));
-
   // render
   return (
     <GestureDetector gesture={gesture}>
@@ -72,7 +69,7 @@ export const SettingsScreen = () => {
             />
             <Blur blur={10} />
           </Paint>
-          <Group layer={paint}>
+          <Group>
             <RoundedRect
               height={HEIGHT_ISLAND}
               width={WIDTH_ISLAND}
