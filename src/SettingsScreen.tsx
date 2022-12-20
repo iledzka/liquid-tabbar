@@ -61,15 +61,18 @@ export const SettingsScreen = () => {
     <GestureDetector gesture={gesture}>
       <View style={[styles.container]}>
         <Canvas style={[styles.canvas]}>
-          <Paint>
-            <ColorMatrix
-              matrix={[
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, -20,
-              ]}
-            />
-            <Blur blur={10} />
-          </Paint>
-          <Group>
+          <Group
+            layer={
+              <Paint>
+                <Blur blur={10} />
+                <ColorMatrix
+                  matrix={[
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40,
+                    -20,
+                  ]}
+                />
+              </Paint>
+            }>
             <RoundedRect
               height={HEIGHT_ISLAND}
               width={WIDTH_ISLAND}
