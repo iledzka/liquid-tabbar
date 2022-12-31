@@ -13,11 +13,9 @@ import {
   interpolate,
   Paint,
   RoundedRect,
-  usePaintRef,
   useSharedValueEffect,
   useValue,
   useValueEffect,
-  Skia,
 } from '@shopify/react-native-skia';
 
 export const WIDTH_ISLAND = 127;

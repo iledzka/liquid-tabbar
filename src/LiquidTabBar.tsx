@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import Animated, {
+import {StyleSheet, Dimensions, View} from 'react-native';
+import {
   useSharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -8,237 +8,253 @@ import Animated, {
   runOnJS,
   withTiming,
   withSequence,
+  withDelay,
   Easing,
   useAnimatedProps,
-  withDelay,
 } from 'react-native-reanimated';
 import {
-  TapGestureHandler,
-  type TapGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-import {clamp, ReText, serialize} from 'react-native-redash';
-import Svg, {Path, PathProps} from 'react-native-svg';
+  Canvas,
+  RoundedRect,
+  Group,
+  Paint,
+  ColorMatrix,
+  Blur,
+  Circle,
+  useTouchHandler,
+  ImageSVG,
+  useSVG,
+  useValue,
+  useSharedValueEffect,
+  mix,
+  useComputedValue,
+} from '@shopify/react-native-skia';
 
-const CIRCLE_WIDTH = 50;
-const CIRCLE_RADIUS = CIRCLE_WIDTH / 2;
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+  scale: SCREEN_SCALE,
+} = Dimensions.get('screen');
+const RECT_Y = 60;
+const CIRCLE_RADIUS = 26;
 
-const SLIDER_WIDTH = 80;
-import {createCurve} from './bezierSlider/utils';
+export default function MyTabBar({state, descriptors, navigation}) {
+  const [activeTab, setActiveTab] = React.useState<string | null>(null);
 
-const AnimatedPath = Animated.createAnimatedComponent<PathProps>(Path);
-
-function LiquidCircleButtom({route, index, state, descriptors, navigation}) {
-  const pressed = useSharedValue(false);
-  const y = useSharedValue<number>(0);
-  const translateY = useSharedValue<number>(0);
-  const translateX = useSharedValue<number>(CIRCLE_WIDTH / 2);
-  // const opacity = useSharedValue(1);
-  const scale = useSharedValue(1);
-  const uas = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {scale: scale.value},
-        {translateY: y.value}, //withSpring(pressed.value ? -100 : 0)},
-      ],
-      // opacity: opacity.value,
-      // backgroundColor: withTiming(pressed.value ? 'red' : 'translucent', {
-      //   duration: 600,
-      //   easing: Easing.linear,
-      // }),
-    };
-  });
-  const onPress = () => {
+  const handlePressTab = (x: number, y: number) => {
+    const tab = getPressedTab(x, y);
+    if (!tab) {
+      return;
+    }
+    const index = state.routes.findIndex(route => route.name === tab);
+    console.log(state.routes[index]);
     const event = navigation.emit({
       type: 'tabPress',
-      target: route.key,
+      target: state.routes[index].key,
       canPreventDefault: true,
     });
 
+    const isFocused = state.index === index;
+    console.log(isFocused);
     if (!isFocused && !event.defaultPrevented) {
       // The `merge: true` option makes sure that the params inside the tab screen are preserved
-      navigation.navigate({name: route.name, merge: true});
+      navigation.navigate({name: tab, merge: true});
     }
   };
+  const onTouch = useTouchHandler({
+    onStart: ({x, y}) => {
+      runOnJS(handlePressTab)(x, y);
 
-  const eventHandler = useAnimatedGestureHandler<
-    TapGestureHandlerGestureEvent,
-    {offsetX: number}
-  >({
-    onStart: (event, ctx) => {
-      console.log('onStart', event);
-      pressed.value = true;
-      y.value = withSequence(
-        withSpring(-86, {mass: 0.3}),
-        withSpring(0, {mass: 0.1, stiffness: 600}),
-      );
-      translateY.value = withSequence(
-        withSpring(-66, {mass: 0.3}),
-        withSpring(0, {mass: 0.1, stiffness: 200}),
-      );
-
-      scale.value = withSequence(
-        withTiming(0.6, {
-          duration: 500,
-          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      opacity.value = withSequence(
+        withTiming(0, {
+          duration: 400,
+          easing: Easing.linear,
         }),
-        // withSpring(0),
-        withSpring(1),
+        withDelay(
+          1200,
+          withTiming(1, {
+            duration: 500,
+            easing: Easing.linear,
+          }),
+        ),
+      );
+      interaction.value = withSequence(
+        withTiming(1, {
+          duration: 500,
+          easing: Easing.bezier(0.25, 1, 0.5, 1),
+        }),
+        withTiming(0, {
+          duration: 300,
+          easing: Easing.sin,
+        }),
       );
     },
-    onEnd: (event, ctx) => {
-      console.log('onEnd', event);
-      pressed.value = false;
+    onActive: pt => {
+      // touchPos.current = pt;
     },
-    onCancel: (event, ctx) => {
-      console.log('onCancel', event);
-      pressed.value = false;
-    },
-    onActive: (event, context) => {
-      runOnJS(onPress)();
-    },
-    onFail: (event, ctx) => {
-      console.log('onFail', event);
-      pressed.value = false;
-    },
-    onFinish: (event, ctx) => {
-      console.log('onFinish', event);
-      pressed.value = false;
-    },
-  });
-  const {options} = descriptors[route?.key];
-
-  const isFocused = state.index === index;
-
-  const animatedProps = useAnimatedProps(() => {
-    const {curve} = createCurve(translateX, translateY);
-    return {
-      d: serialize(curve),
-    };
+    onEnd: () => {},
   });
 
-  return (
-    <TapGestureHandler onGestureEvent={eventHandler}>
-      <Animated.View>
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            top: -35,
-            left: -12,
-          }}>
-          <Svg
-            width={SLIDER_WIDTH}
-            height={20}
-            viewBox={`0 0 ${SLIDER_WIDTH} 40`}
-            fill="#FDC8DA">
-            <AnimatedPath
-              animatedProps={animatedProps}
-              // stroke="black"
-              strokeWidth="2"
-            />
-          </Svg>
-        </View>
-        <Animated.View
-          accessibilityRole="button"
-          accessibilityState={isFocused ? {selected: true} : {}}
-          // onLayout={event => {
-          //   const layout = event.nativeEvent.layout;
-          //   console.log('----- ', index);
-          //   console.log('height:', layout.height);
-          //   console.log('width:', layout.width);
-          //   console.log('x:', layout.x);
-          //   console.log('y:', layout.y);
-          //   xCircle.value = layout.x;
-          //   yCircle.value = layout.y;
-          //   console.log('----- END ---');
-          // }}
-          style={[styles.tabBarButton, uas]}>
-          {options.tabBarIcon({
-            focused: isFocused,
-            color: isFocused
-              ? options.tabBarActiveTintColor
-              : options.tabBarInactiveTintColor,
-            size: 30,
-          })}
-        </Animated.View>
-      </Animated.View>
-    </TapGestureHandler>
+  function spaceAroundCircleAt(index: number) {
+    const MARGINS = SCREEN_WIDTH - CIRCLE_RADIUS * state.routes.length;
+    let OUTER_MARGIN = 4;
+    const INNER_MARGIN =
+      (MARGINS - 2 * OUTER_MARGIN) / (state.routes.length + 1);
+    OUTER_MARGIN += INNER_MARGIN;
+    const firstCircle = OUTER_MARGIN + 0.5 * CIRCLE_RADIUS;
+    const cx = firstCircle + (INNER_MARGIN + CIRCLE_RADIUS) * index;
+    return cx;
+  }
+
+  const cy = RECT_Y + CIRCLE_RADIUS + 4;
+
+  const translateY = useValue(cy);
+  const interaction = useSharedValue(0);
+  const opacity = useSharedValue(1);
+  const rectWidth = useValue(SCREEN_WIDTH);
+  const rectX = useValue(0);
+  const colorMatrix = useValue([
+    1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 40, -20,
+  ]);
+
+  const initialCoordinates = state.routes.reduce((acc, route, index) => {
+    const cx = spaceAroundCircleAt(index);
+
+    return {...acc, [route.name]: {cx, cy}};
+  }, {});
+
+  useSharedValueEffect(
+    () => {
+      rectWidth.current = mix(
+        interaction.value,
+        SCREEN_WIDTH,
+        SCREEN_WIDTH - 60,
+      );
+      rectX.current = mix(interaction.value, 0, 30);
+      translateY.current = mix(interaction.value, cy, cy - 66);
+      colorMatrix.current = [
+        1,
+        opacity.value,
+        opacity.value,
+        opacity.value,
+        0,
+        opacity.value,
+        1,
+        opacity.value,
+        opacity.value,
+        0,
+        opacity.value,
+        opacity.value,
+        1,
+        opacity.value,
+        0,
+        opacity.value,
+        opacity.value,
+        opacity.value,
+        40,
+        -20,
+      ];
+    },
+    interaction,
+    opacity,
   );
-}
-export default function MyTabBar({state, descriptors, navigation}) {
-  const pressed = useSharedValue(false);
-  const uas = useAnimatedStyle(() => {
-    return {
-      // backgroundColor: pressed.value ? '#FEEF86' : '#001972',
-      marginHorizontal: withSpring(pressed.value ? 20 : 0),
-      paddingBottom: withSpring(pressed.value ? 36 : 20),
-      // backgroundColor: withTiming(pressed.value ? 'red' : 'translucent', {
-      //   duration: 600,
-      //   easing: Easing.cubic,
-      // }),
-    };
-  });
 
-  const eventHandler = useAnimatedGestureHandler({
-    onStart: (event, ctx) => {
-      console.log('onActive', event);
-      pressed.value = true;
-    },
-    onEnd: (event, ctx) => {
-      console.log('onActive', event);
-      pressed.value = false;
-    },
-    onCancel: (event, ctx) => {
-      console.log('onActive', event);
-      pressed.value = false;
-    },
-    onActive: (event, ctx) => {
-      console.log('onActive', event);
-    },
-    onFail: (event, ctx) => {
-      console.log('onFail', event);
-      pressed.value = false;
-    },
-    onFinish: (event, ctx) => {
-      console.log('onFinish', event);
-      pressed.value = false;
-    },
-  });
+  const svgHome = useSVG(require('./assets/icons/home.svg'));
+  const svgBookmark = useSVG(require('./assets/icons/bookmark.svg'));
+  const svgEye = useSVG(require('./assets/icons/eye.svg'));
+  const svgHeart = useSVG(require('./assets/icons/heart.svg'));
+  const svgUser = useSVG(require('./assets/icons/user.svg'));
+
+  const getIcon = (name: string) => {
+    if (name === 'Home') {
+      return svgHome;
+    }
+    if (name === 'Settings') {
+      return svgBookmark;
+    }
+    if (name === 'Eye') {
+      return svgEye;
+    }
+    if (name === 'Heart') {
+      return svgHeart;
+    }
+
+    return svgUser;
+  };
+
+  const svgY = useComputedValue(
+    () => translateY.current - 0.5 * CIRCLE_RADIUS,
+    [translateY, CIRCLE_RADIUS],
+  );
+
+  const getPressedTab = (x, y) => {
+    for (const [name, {cx, cy}] of Object.entries(initialCoordinates)) {
+      var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+      if (distancesquared <= CIRCLE_RADIUS * CIRCLE_RADIUS) {
+        return name;
+      }
+    }
+    return '';
+  };
+
   return (
-    <TapGestureHandler onGestureEvent={eventHandler}>
-      <Animated.View style={[styles.tabBar, uas]}>
-        {state.routes.map((route, index) => {
-          return (
-            <LiquidCircleButtom
-              key={index}
-              route={route}
-              index={index}
-              state={state}
-              descriptors={descriptors}
-              navigation={navigation}
-            />
-          );
-        })}
-      </Animated.View>
-    </TapGestureHandler>
+    <View>
+      <Canvas style={styles.canvas} onTouch={onTouch}>
+        <Group
+          layer={
+            <Paint>
+              <Blur blur={10} />
+              <ColorMatrix matrix={colorMatrix} />
+            </Paint>
+          }>
+          <RoundedRect
+            x={rectX}
+            y={RECT_Y}
+            width={rectWidth}
+            height={120}
+            r={26}
+            color="#FDC8DA"
+          />
+          {state.routes.map((route: {name: string}, index: number) => {
+            return (
+              <Circle
+                key={`circle-${index}-${route.name}`}
+                cx={initialCoordinates[route.name].cx}
+                cy={translateY}
+                r={CIRCLE_RADIUS}
+                color="#FDC8DA"
+              />
+            );
+          })}
+        </Group>
+        <Group>
+          {state.routes.map((route: any, index: number) => {
+            const icon = getIcon(route?.name);
+            if (icon) {
+              return (
+                <ImageSVG
+                  key={index + route}
+                  svg={icon}
+                  x={initialCoordinates[route.name].cx - 0.5 * CIRCLE_RADIUS}
+                  y={svgY}
+                  width={50}
+                  height={50}
+                />
+              );
+            }
+          })}
+        </Group>
+      </Canvas>
+    </View>
   );
 }
 
 export const styles = StyleSheet.create({
   tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: 20,
-    paddingBottom: 6,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    backgroundColor: '#FDC8DA',
+    height: 200,
   },
-  tabBarButton: {
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-    width: 50,
-    backgroundColor: '#FDC8DA',
+  canvas: {
+    ...StyleSheet.absoluteFillObject,
+    top: -140,
+    backgroundColor: 'red',
   },
 });
