@@ -2,15 +2,11 @@ import React from 'react';
 import {StyleSheet, Dimensions, View} from 'react-native';
 import {
   useSharedValue,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  withSpring,
   runOnJS,
   withTiming,
   withSequence,
   withDelay,
   Easing,
-  useAnimatedProps,
 } from 'react-native-reanimated';
 import {
   Canvas,
@@ -35,18 +31,19 @@ const {
   scale: SCREEN_SCALE,
 } = Dimensions.get('screen');
 const RECT_Y = 60;
-const CIRCLE_RADIUS = 26;
+const CIRCLE_RADIUS = 24;
 
 export default function MyTabBar({state, descriptors, navigation}) {
   const [activeTab, setActiveTab] = React.useState<string | null>(null);
 
   const handlePressTab = (x: number, y: number) => {
     const tab = getPressedTab(x, y);
+    setActiveTab(tab);
     if (!tab) {
       return;
     }
     const index = state.routes.findIndex(route => route.name === tab);
-    console.log(state.routes[index]);
+
     const event = navigation.emit({
       type: 'tabPress',
       target: state.routes[index].key,
@@ -54,7 +51,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
     });
 
     const isFocused = state.index === index;
-    console.log(isFocused);
+
     if (!isFocused && !event.defaultPrevented) {
       // The `merge: true` option makes sure that the params inside the tab screen are preserved
       navigation.navigate({name: tab, merge: true});
@@ -66,13 +63,13 @@ export default function MyTabBar({state, descriptors, navigation}) {
 
       opacity.value = withSequence(
         withTiming(0, {
-          duration: 400,
+          duration: 200,
           easing: Easing.linear,
         }),
         withDelay(
           1200,
           withTiming(1, {
-            duration: 500,
+            duration: 300,
             easing: Easing.linear,
           }),
         ),
@@ -80,9 +77,20 @@ export default function MyTabBar({state, descriptors, navigation}) {
       interaction.value = withSequence(
         withTiming(1, {
           duration: 500,
-          easing: Easing.bezier(0.25, 1, 0.5, 1),
+          easing: Easing.bezier(0.25, 1.5, 0.1, 1),
         }),
         withTiming(0, {
+          duration: 300,
+          easing: Easing.sin,
+        }),
+      );
+
+      circleRadius.value = withSequence(
+        withTiming(CIRCLE_RADIUS * 0.7, {
+          duration: 1000,
+          easing: Easing.bezier(0.25, 1, 0.5, 1),
+        }),
+        withTiming(CIRCLE_RADIUS, {
           duration: 300,
           easing: Easing.sin,
         }),
@@ -113,12 +121,13 @@ export default function MyTabBar({state, descriptors, navigation}) {
   const rectWidth = useValue(SCREEN_WIDTH);
   const rectX = useValue(0);
   const colorMatrix = useValue([
-    1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 40, -20,
+    1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 80, -20,
   ]);
+  const circleRadius = useSharedValue(CIRCLE_RADIUS);
+  const circleScale = useValue(CIRCLE_RADIUS);
 
   const initialCoordinates = state.routes.reduce((acc, route, index) => {
     const cx = spaceAroundCircleAt(index);
-
     return {...acc, [route.name]: {cx, cy}};
   }, {});
 
@@ -130,7 +139,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
         SCREEN_WIDTH - 60,
       );
       rectX.current = mix(interaction.value, 0, 30);
-      translateY.current = mix(interaction.value, cy, cy - 66);
+      translateY.current = mix(interaction.value, cy, cy - 60);
       colorMatrix.current = [
         1,
         opacity.value,
@@ -150,13 +159,17 @@ export default function MyTabBar({state, descriptors, navigation}) {
         opacity.value,
         opacity.value,
         opacity.value,
-        40,
+        80,
         -20,
       ];
     },
     interaction,
     opacity,
   );
+
+  useSharedValueEffect(() => {
+    circleScale.current = circleRadius.value;
+  }, circleRadius);
 
   const svgHome = useSVG(require('./assets/icons/home.svg'));
   const svgBookmark = useSVG(require('./assets/icons/bookmark.svg'));
@@ -219,8 +232,8 @@ export default function MyTabBar({state, descriptors, navigation}) {
               <Circle
                 key={`circle-${index}-${route.name}`}
                 cx={initialCoordinates[route.name].cx}
-                cy={translateY}
-                r={CIRCLE_RADIUS}
+                cy={activeTab === route.name ? translateY : cy}
+                r={circleScale}
                 color="#FDC8DA"
               />
             );
@@ -235,9 +248,9 @@ export default function MyTabBar({state, descriptors, navigation}) {
                   key={index + route}
                   svg={icon}
                   x={initialCoordinates[route.name].cx - 0.5 * CIRCLE_RADIUS}
-                  y={svgY}
-                  width={50}
-                  height={50}
+                  y={activeTab === route.name ? svgY : cy - 0.5 * CIRCLE_RADIUS}
+                  width={24}
+                  height={24}
                 />
               );
             }
@@ -255,6 +268,5 @@ export const styles = StyleSheet.create({
   canvas: {
     ...StyleSheet.absoluteFillObject,
     top: -140,
-    backgroundColor: 'red',
   },
 });
