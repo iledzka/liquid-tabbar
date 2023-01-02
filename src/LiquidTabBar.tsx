@@ -100,9 +100,9 @@ export default function MyTabBar({state, descriptors, navigation}) {
       );
 
       circleRadius.value = withSequence(
-        withTiming(CIRCLE_RADIUS * 0.7, {
-          duration: 1000,
-          easing: Easing.bezier(0.25, 1, 0.5, 1),
+        withTiming(CIRCLE_RADIUS * 0.4, {
+          duration: 800,
+          easing: Easing.bezier(0.55, 0.61, 0.98, 0.68),
         }),
         withTiming(CIRCLE_RADIUS, {
           duration: 300,
@@ -192,22 +192,29 @@ export default function MyTabBar({state, descriptors, navigation}) {
   const svgEye = useSVG(require('./assets/icons/eye.svg'));
   const svgHeart = useSVG(require('./assets/icons/heart.svg'));
   const svgUser = useSVG(require('./assets/icons/user.svg'));
+  const svgHomeActive = useSVG(require('./assets/icons/home-filled.svg'));
+  const svgBookmarkActive = useSVG(
+    require('./assets/icons/bookmark-filled.svg'),
+  );
+  const svgEyeActive = useSVG(require('./assets/icons/eye-filled.svg'));
+  const svgHeartActive = useSVG(require('./assets/icons/heart-filled.svg'));
+  const svgUserActive = useSVG(require('./assets/icons/user-filled.svg'));
 
   const getIcon = (name: string) => {
     if (name === 'Home') {
-      return svgHome;
+      return activeTab === 'Home' ? svgHomeActive : svgHome;
     }
     if (name === 'Settings') {
-      return svgBookmark;
+      return activeTab === 'Settings' ? svgBookmarkActive : svgBookmark;
     }
     if (name === 'Eye') {
-      return svgEye;
+      return activeTab === 'Eye' ? svgEyeActive : svgEye;
     }
     if (name === 'Heart') {
-      return svgHeart;
+      return activeTab === 'Heart' ? svgHeartActive : svgHeart;
     }
 
-    return svgUser;
+    return activeTab === 'User' ? svgUserActive : svgUser;
   };
 
   const svgY = useComputedValue(
