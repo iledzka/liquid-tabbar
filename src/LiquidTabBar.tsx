@@ -80,7 +80,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
       interaction.value = withSequence(
         withTiming(1, {
           duration: 400,
-          easing: Easing.bezier(0.55, 0.61, 0.98, 0.68),
+          easing: Easing.bezier(0.97, 0.68, 0.21, 1.18),
         }),
         withTiming(0, {
           duration: 300,
@@ -97,6 +97,23 @@ export default function MyTabBar({state, descriptors, navigation}) {
           duration: 300,
           easing: Easing.elastic(),
         }),
+      );
+
+      iconSizeInteraction.value = withSequence(
+        withDelay(
+          400,
+          withTiming(1, {
+            duration: 50,
+            easing: Easing.bezier(0.97, 0.68, 0.21, 1.18),
+          }),
+        ),
+        withDelay(
+          300,
+          withTiming(0, {
+            duration: 100,
+            easing: Easing.quad,
+          }),
+        ),
       );
 
       circleRadius.value = withSequence(
@@ -132,6 +149,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
   const translateY = useValue(cy);
   const interaction = useSharedValue(0);
   const interactionBounce = useSharedValue(0);
+  const iconSizeInteraction = useSharedValue(0);
   const opacity = useSharedValue(1);
   const rectWidth = useValue(SCREEN_WIDTH);
   const rectX = useValue(0);
@@ -146,6 +164,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
     return {...acc, [route.name]: {cx, cy}};
   }, {});
 
+  const iconSize = useValue(24);
   useSharedValueEffect(
     () => {
       rectWidth.current = mix(
@@ -178,6 +197,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
         -20,
       ];
       marginScale.current = mix(interaction.value, 1, 20);
+      iconSize.current = mix(iconSizeInteraction.value, 24, 0);
     },
     interaction,
     opacity,
@@ -309,8 +329,8 @@ export default function MyTabBar({state, descriptors, navigation}) {
                       : Selector(iconX, x => x[index])
                   }
                   y={activeTab === route.name ? svgY : cy - 0.5 * CIRCLE_RADIUS}
-                  width={24}
-                  height={24}
+                  width={activeTab === route.name ? iconSize : 24}
+                  height={activeTab === route.name ? iconSize : 24}
                 />
               );
             }
