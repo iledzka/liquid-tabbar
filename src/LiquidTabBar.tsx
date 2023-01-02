@@ -23,6 +23,7 @@ import {
   useSharedValueEffect,
   mix,
   useComputedValue,
+  Selector,
 } from '@shopify/react-native-skia';
 
 const {
@@ -38,6 +39,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
 
   const handlePressTab = (x: number, y: number) => {
     const tab = getPressedTab(x, y);
+
     setActiveTab(tab);
     if (!tab) {
       return;
@@ -74,6 +76,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
           }),
         ),
       );
+
       interaction.value = withSequence(
         withTiming(1, {
           duration: 500,
@@ -162,6 +165,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
         80,
         -20,
       ];
+      marginScale.current = mix(interaction.value, 1, 20);
     },
     interaction,
     opacity,
@@ -209,6 +213,39 @@ export default function MyTabBar({state, descriptors, navigation}) {
     return '';
   };
 
+  const tabColor = useComputedValue(() => {
+    const colors = [
+      'rgb(235,200,253)',
+      'rgb(253,200,218)',
+      'rgb(218,253,200)',
+      'rgb(200,253,235)',
+      'rgb(200,218,253)',
+    ];
+    const index = state.routes.findIndex(route => route.name === activeTab);
+    return colors[index] || 'white';
+  }, [activeTab]);
+
+  const marginScale = useValue(1);
+  const iconX = useComputedValue(() => {
+    const routeNames = Object.keys(initialCoordinates);
+
+    const scales = routeNames.map((key, i) => {
+      if (!activeTab) {
+        return initialCoordinates[key].cx - 0.5 * CIRCLE_RADIUS;
+      }
+      const activeIndex = routeNames.findIndex(name => name === activeTab);
+      if (i < activeIndex) {
+        return (
+          initialCoordinates[key].cx - 0.5 * CIRCLE_RADIUS + marginScale.current
+        );
+      }
+      return (
+        initialCoordinates[key].cx - 0.5 * CIRCLE_RADIUS - marginScale.current
+      );
+    });
+    return scales;
+  }, [marginScale, activeTab]);
+
   return (
     <View>
       <Canvas style={styles.canvas} onTouch={onTouch}>
@@ -225,7 +262,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
             width={rectWidth}
             height={120}
             r={26}
-            color="#FDC8DA"
+            color={tabColor}
           />
           {state.routes.map((route: {name: string}, index: number) => {
             return (
@@ -234,7 +271,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
                 cx={initialCoordinates[route.name].cx}
                 cy={activeTab === route.name ? translateY : cy}
                 r={circleScale}
-                color="#FDC8DA"
+                color={tabColor}
               />
             );
           })}
@@ -247,7 +284,11 @@ export default function MyTabBar({state, descriptors, navigation}) {
                 <ImageSVG
                   key={index + route}
                   svg={icon}
-                  x={initialCoordinates[route.name].cx - 0.5 * CIRCLE_RADIUS}
+                  x={
+                    activeTab === route.name
+                      ? initialCoordinates[route.name].cx - 0.5 * CIRCLE_RADIUS
+                      : Selector(iconX, x => x[index])
+                  }
                   y={activeTab === route.name ? svgY : cy - 0.5 * CIRCLE_RADIUS}
                   width={24}
                   height={24}
