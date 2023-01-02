@@ -79,12 +79,23 @@ export default function MyTabBar({state, descriptors, navigation}) {
 
       interaction.value = withSequence(
         withTiming(1, {
-          duration: 500,
-          easing: Easing.bezier(0.25, 1.5, 0.1, 1),
+          duration: 400,
+          easing: Easing.bezier(0.55, 0.61, 0.98, 0.68),
         }),
         withTiming(0, {
           duration: 300,
           easing: Easing.sin,
+        }),
+      );
+
+      interactionBounce.value = withSequence(
+        withTiming(1, {
+          duration: 500,
+          easing: Easing.elastic(),
+        }),
+        withTiming(0, {
+          duration: 300,
+          easing: Easing.elastic(),
         }),
       );
 
@@ -120,6 +131,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
 
   const translateY = useValue(cy);
   const interaction = useSharedValue(0);
+  const interactionBounce = useSharedValue(0);
   const opacity = useSharedValue(1);
   const rectWidth = useValue(SCREEN_WIDTH);
   const rectX = useValue(0);
@@ -137,12 +149,12 @@ export default function MyTabBar({state, descriptors, navigation}) {
   useSharedValueEffect(
     () => {
       rectWidth.current = mix(
-        interaction.value,
+        interactionBounce.value,
         SCREEN_WIDTH,
         SCREEN_WIDTH - 60,
       );
-      rectX.current = mix(interaction.value, 0, 30);
-      translateY.current = mix(interaction.value, cy, cy - 60);
+      rectX.current = mix(interactionBounce.value, 0, 30);
+      translateY.current = mix(interaction.value, cy, cy - 64);
       colorMatrix.current = [
         1,
         opacity.value,
