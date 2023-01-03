@@ -7,6 +7,7 @@ import {
   withSequence,
   withDelay,
   Easing,
+  cancelAnimation,
 } from 'react-native-reanimated';
 import {
   Canvas,
@@ -31,7 +32,7 @@ const {
   height: SCREEN_HEIGHT,
   scale: SCREEN_SCALE,
 } = Dimensions.get('screen');
-const RECT_Y = 60;
+const RECT_Y = 70;
 const CIRCLE_RADIUS = 24;
 
 export default function MyTabBar({state, descriptors, navigation}) {
@@ -61,6 +62,11 @@ export default function MyTabBar({state, descriptors, navigation}) {
   };
   const onTouch = useTouchHandler({
     onStart: ({x, y}) => {
+      const tab = getPressedTab(x, y);
+      if (tab === '') {
+        return;
+      }
+
       runOnJS(handlePressTab)(x, y);
 
       opacity.value = withSequence(
@@ -173,7 +179,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
         SCREEN_WIDTH - 60,
       );
       rectX.current = mix(interactionBounce.value, 0, 30);
-      translateY.current = mix(interaction.value, cy, cy - 64);
+      translateY.current = mix(interaction.value, cy, cy - 70);
       colorMatrix.current = [
         1,
         opacity.value,
@@ -254,15 +260,21 @@ export default function MyTabBar({state, descriptors, navigation}) {
 
   const tabColor = useComputedValue(() => {
     const colors = [
-      'rgb(235,200,253)',
-      'rgb(253,200,218)',
-      'rgb(218,253,200)',
-      'rgb(200,253,235)',
-      'rgb(200,218,253)',
+      'rgb(221,217,255)',
+      'rgb(255,217,251)',
+      'rgb(251,255,217)',
+      'rgb(217,255,221)',
+      'rgb(217,251,255)',
     ];
     const index = state.routes.findIndex(route => route.name === activeTab);
     return colors[index] || 'white';
   }, [activeTab]);
+
+  const roundedRectX = useComputedValue(() => {
+    if (activeTab) {
+      return initialCoordinates[activeTab].cx - circleScale.current / 2;
+    }
+  }, [circleScale, activeTab]);
 
   const marginScale = useValue(1);
   const iconX = useComputedValue(() => {
@@ -305,13 +317,28 @@ export default function MyTabBar({state, descriptors, navigation}) {
           />
           {state.routes.map((route: {name: string}, index: number) => {
             return (
-              <Circle
-                key={`circle-${index}-${route.name}`}
-                cx={initialCoordinates[route.name].cx}
-                cy={activeTab === route.name ? translateY : cy}
-                r={circleScale}
-                color={tabColor}
-              />
+              <Group key={`group-${index}-${route.name}`}>
+                <Circle
+                  key={`circle-${index}-${route.name}`}
+                  cx={initialCoordinates[route.name].cx}
+                  cy={activeTab === route.name ? translateY : cy}
+                  r={circleScale}
+                  color={tabColor}
+                />
+                <RoundedRect
+                  key={`rect-${index}-${route.name}`}
+                  x={
+                    activeTab == null
+                      ? initialCoordinates[route.name].cx
+                      : roundedRectX
+                  }
+                  y={activeTab === route.name ? translateY : cy}
+                  r={6}
+                  width={circleScale}
+                  height={40}
+                  color={tabColor}
+                />
+              </Group>
             );
           })}
         </Group>
@@ -342,11 +369,8 @@ export default function MyTabBar({state, descriptors, navigation}) {
 }
 
 export const styles = StyleSheet.create({
-  tabBar: {
-    height: 200,
-  },
   canvas: {
     ...StyleSheet.absoluteFillObject,
-    top: -140,
+    top: -160,
   },
 });
