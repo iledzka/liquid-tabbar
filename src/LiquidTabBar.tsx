@@ -7,6 +7,7 @@ import {
   withSequence,
   withDelay,
   Easing,
+  withSpring,
   cancelAnimation,
 } from 'react-native-reanimated';
 import {
@@ -27,20 +28,14 @@ import {
   Selector,
 } from '@shopify/react-native-skia';
 
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-  scale: SCREEN_SCALE,
-} = Dimensions.get('screen');
+const {width: SCREEN_WIDTH} = Dimensions.get('screen');
 const RECT_Y = 70;
 const CIRCLE_RADIUS = 24;
 
 export default function MyTabBar({state, descriptors, navigation}) {
   const [activeTab, setActiveTab] = React.useState<string | null>(null);
 
-  const handlePressTab = (x: number, y: number) => {
-    const tab = getPressedTab(x, y);
-
+  const handlePressTab = (tab: string) => {
     setActiveTab(tab);
     if (!tab) {
       return;
@@ -62,31 +57,37 @@ export default function MyTabBar({state, descriptors, navigation}) {
   };
   const onTouch = useTouchHandler({
     onStart: ({x, y}) => {
+      cancelAnimation(circleRadius);
+      cancelAnimation(opacity);
+      cancelAnimation(interaction);
+      cancelAnimation(interactionBounce);
+      cancelAnimation(iconSizeInteraction);
+
       const tab = getPressedTab(x, y);
       if (tab === '') {
         return;
       }
 
-      runOnJS(handlePressTab)(x, y);
+      runOnJS(handlePressTab)(tab);
 
       opacity.value = withSequence(
         withTiming(0, {
           duration: 200,
-          easing: Easing.linear,
+          easing: Easing.bezier(0, 0.55, 0.45, 1),
         }),
         withDelay(
-          1200,
+          500,
           withTiming(1, {
-            duration: 300,
-            easing: Easing.linear,
+            duration: 200,
+            easing: Easing.bezier(0, 0.55, 0.45, 1),
           }),
         ),
       );
 
       interaction.value = withSequence(
         withTiming(1, {
-          duration: 400,
-          easing: Easing.bezier(0.97, 0.68, 0.21, 1.18),
+          duration: 500,
+          easing: Easing.bezier(0.33, 1, 0.68, 1),
         }),
         withTiming(0, {
           duration: 300,
@@ -96,13 +97,14 @@ export default function MyTabBar({state, descriptors, navigation}) {
 
       interactionBounce.value = withSequence(
         withTiming(1, {
-          duration: 500,
-          easing: Easing.elastic(),
+          duration: 520,
+          easing: Easing.bezier(0, 0.8, 0.45, 1),
         }),
         withTiming(0, {
-          duration: 300,
+          duration: 160,
           easing: Easing.elastic(),
         }),
+        withSpring(0.2),
       );
 
       iconSizeInteraction.value = withSequence(
@@ -114,27 +116,25 @@ export default function MyTabBar({state, descriptors, navigation}) {
           }),
         ),
         withDelay(
-          300,
+          318,
           withTiming(0, {
-            duration: 100,
+            duration: 10,
             easing: Easing.quad,
           }),
         ),
       );
 
       circleRadius.value = withSequence(
-        withTiming(CIRCLE_RADIUS * 0.4, {
-          duration: 800,
+        withTiming(CIRCLE_RADIUS * 0.8, {
+          duration: 400,
           easing: Easing.bezier(0.55, 0.61, 0.98, 0.68),
         }),
+        withSpring(0),
         withTiming(CIRCLE_RADIUS, {
-          duration: 300,
+          duration: 10,
           easing: Easing.sin,
         }),
       );
-    },
-    onActive: pt => {
-      // touchPos.current = pt;
     },
     onEnd: () => {},
   });
@@ -179,7 +179,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
         SCREEN_WIDTH - 60,
       );
       rectX.current = mix(interactionBounce.value, 0, 30);
-      translateY.current = mix(interaction.value, cy, cy - 70);
+      translateY.current = mix(interaction.value, cy, cy - 74);
       colorMatrix.current = [
         1,
         opacity.value,
@@ -202,7 +202,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
         80,
         -20,
       ];
-      marginScale.current = mix(interaction.value, 1, 20);
+      marginScale.current = mix(interactionBounce.value, 1, 20);
       iconSize.current = mix(iconSizeInteraction.value, 24, 0);
     },
     interaction,
@@ -272,11 +272,16 @@ export default function MyTabBar({state, descriptors, navigation}) {
 
   const roundedRectX = useComputedValue(() => {
     if (activeTab) {
-      return initialCoordinates[activeTab].cx - circleScale.current / 2;
+      return initialCoordinates[activeTab].cx - circleScale.current / 5;
     }
   }, [circleScale, activeTab]);
 
+  const rounderRectScale = useComputedValue(() => {
+    return circleScale.current / 2;
+  }, [circleScale]);
+
   const marginScale = useValue(1);
+
   const iconX = useComputedValue(() => {
     const routeNames = Object.keys(initialCoordinates);
 
@@ -334,7 +339,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
                   }
                   y={activeTab === route.name ? translateY : cy}
                   r={6}
-                  width={circleScale}
+                  width={rounderRectScale}
                   height={40}
                   color={tabColor}
                 />
