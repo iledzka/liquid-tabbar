@@ -27,20 +27,47 @@ import {
   useComputedValue,
   Selector,
 } from '@shopify/react-native-skia';
+import {colorsStrings} from './utils';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('screen');
 const RECT_Y = 70;
 const CIRCLE_RADIUS = 24;
 
 export default function MyTabBar({state, descriptors, navigation}) {
-  const [activeTab, setActiveTab] = React.useState<string | null>(null);
+  const [activeTab, setActiveTab] = React.useState<string>(
+    state.routes[state.index].name,
+  );
+
+  const cy = RECT_Y + CIRCLE_RADIUS + 4;
+  const initialCoordinates = state.routes.reduce((acc, route, index) => {
+    const cx = spaceAroundCircleAt(index);
+    return {...acc, [route.name]: {cx, cy}};
+  }, {});
+
+  const translateY = useValue(cy);
+  const interaction = useSharedValue(0);
+  const interactionBounce = useSharedValue(0);
+  const iconSizeInteraction = useSharedValue(0);
+  const opacity = useSharedValue(1);
+  const rectWidth = useValue(SCREEN_WIDTH);
+  const rectX = useValue(0);
+  const colorMatrix = useValue([
+    1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 80, -20,
+  ]);
+  const circleRadius = useSharedValue(CIRCLE_RADIUS);
+  const circleScale = useValue(CIRCLE_RADIUS);
+  const iconSize = useValue(24);
+  const marginScale = useValue(1);
+
+  const getIndex = (name: string) =>
+    state.routes.findIndex((route: {name: string}) => route.name === name);
 
   const handlePressTab = (tab: string) => {
     setActiveTab(tab);
     if (!tab) {
       return;
     }
-    const index = state.routes.findIndex(route => route.name === tab);
+    const index = getIndex(tab);
 
     const event = navigation.emit({
       type: 'tabPress',
@@ -48,13 +75,12 @@ export default function MyTabBar({state, descriptors, navigation}) {
       canPreventDefault: true,
     });
 
-    const isFocused = state.index === index;
-
-    if (!isFocused && !event.defaultPrevented) {
+    if (!event.defaultPrevented) {
       // The `merge: true` option makes sure that the params inside the tab screen are preserved
       navigation.navigate({name: tab, merge: true});
     }
   };
+
   const onTouch = useTouchHandler({
     onStart: ({x, y}) => {
       cancelAnimation(circleRadius);
@@ -136,7 +162,6 @@ export default function MyTabBar({state, descriptors, navigation}) {
         }),
       );
     },
-    onEnd: () => {},
   });
 
   function spaceAroundCircleAt(index: number) {
@@ -150,27 +175,16 @@ export default function MyTabBar({state, descriptors, navigation}) {
     return cx;
   }
 
-  const cy = RECT_Y + CIRCLE_RADIUS + 4;
+  const getPressedTab = (x: number, y: number) => {
+    for (const [name, {cx, cy}] of Object.entries(initialCoordinates)) {
+      var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+      if (distancesquared <= CIRCLE_RADIUS * CIRCLE_RADIUS) {
+        return name;
+      }
+    }
+    return '';
+  };
 
-  const translateY = useValue(cy);
-  const interaction = useSharedValue(0);
-  const interactionBounce = useSharedValue(0);
-  const iconSizeInteraction = useSharedValue(0);
-  const opacity = useSharedValue(1);
-  const rectWidth = useValue(SCREEN_WIDTH);
-  const rectX = useValue(0);
-  const colorMatrix = useValue([
-    1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 80, -20,
-  ]);
-  const circleRadius = useSharedValue(CIRCLE_RADIUS);
-  const circleScale = useValue(CIRCLE_RADIUS);
-
-  const initialCoordinates = state.routes.reduce((acc, route, index) => {
-    const cx = spaceAroundCircleAt(index);
-    return {...acc, [route.name]: {cx, cy}};
-  }, {});
-
-  const iconSize = useValue(24);
   useSharedValueEffect(
     () => {
       rectWidth.current = mix(
@@ -207,6 +221,8 @@ export default function MyTabBar({state, descriptors, navigation}) {
     },
     interaction,
     opacity,
+    interactionBounce,
+    iconSizeInteraction,
   );
 
   useSharedValueEffect(() => {
@@ -248,26 +264,9 @@ export default function MyTabBar({state, descriptors, navigation}) {
     [translateY, CIRCLE_RADIUS],
   );
 
-  const getPressedTab = (x, y) => {
-    for (const [name, {cx, cy}] of Object.entries(initialCoordinates)) {
-      var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-      if (distancesquared <= CIRCLE_RADIUS * CIRCLE_RADIUS) {
-        return name;
-      }
-    }
-    return '';
-  };
-
   const tabColor = useComputedValue(() => {
-    const colors = [
-      'rgb(221,217,255)',
-      'rgb(255,217,251)',
-      'rgb(251,255,217)',
-      'rgb(217,255,221)',
-      'rgb(217,251,255)',
-    ];
-    const index = state.routes.findIndex(route => route.name === activeTab);
-    return colors[index] || 'white';
+    const index = getIndex(activeTab);
+    return colorsStrings[index] || 'white';
   }, [activeTab]);
 
   const roundedRectX = useComputedValue(() => {
@@ -279,8 +278,6 @@ export default function MyTabBar({state, descriptors, navigation}) {
   const rounderRectScale = useComputedValue(() => {
     return circleScale.current / 2;
   }, [circleScale]);
-
-  const marginScale = useValue(1);
 
   const iconX = useComputedValue(() => {
     const routeNames = Object.keys(initialCoordinates);
