@@ -6,7 +6,8 @@ type Colors =
   | 'green'
   | 'lightGrey'
   | 'mediumGrey'
-  | 'grey';
+  | 'grey'
+  | 'black';
 
 export const colors: Record<Colors, string> = {
   purple: 'rgb(221,217,255)',
@@ -17,6 +18,7 @@ export const colors: Record<Colors, string> = {
   grey: 'rgb(128, 128, 128)',
   lightGrey: 'rgb(248,248,248)',
   mediumGrey: 'rgb(240,240,240)',
+  black: '#000',
 };
 
 export const colorsStrings = Object.values(colors);
