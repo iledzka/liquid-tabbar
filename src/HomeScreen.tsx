@@ -12,7 +12,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors} from './utils';
 import textStyles from './text.styles';
-import Pill from './Pill';
+import IntensityPill from './IntensityPill';
 import Icon from 'react-native-vector-icons/Feather';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('screen');
@@ -38,8 +38,14 @@ export default function HomeScreen() {
             Core, Lower
           </Text>
           <View style={styles.heroInfo}>
-            <Pill name="Duration" intensity={1} />
-            <Pill name="Difficulty" intensity={2} />
+            <View style={styles.pillContainer}>
+              <Text style={textStyles.subsubheader}>Duration</Text>
+              <IntensityPill intensity={1} />
+            </View>
+            <View style={styles.pillContainer}>
+              <Text style={textStyles.subsubheader}>Difficulty</Text>
+              <IntensityPill intensity={2} />
+            </View>
           </View>
         </View>
       </View>
@@ -96,6 +102,7 @@ type HomeScreenStyle = {
   carouselImg: ImageStyle;
   carouselSmaller: ImageStyle;
   menuIcon: ViewStyle;
+  pillContainer: ViewStyle;
 };
 
 const styles = StyleSheet.create<HomeScreenStyle>({
@@ -156,6 +163,7 @@ const styles = StyleSheet.create<HomeScreenStyle>({
     width: '97%',
     height: 200,
     marginLeft: 10,
+    marginTop: 10,
   },
   heroInfo: {
     flexDirection: 'row',
@@ -171,4 +179,5 @@ const styles = StyleSheet.create<HomeScreenStyle>({
     alignSelf: 'flex-start',
   },
   menuIcon: {alignSelf: 'flex-end', marginRight: 30, marginTop: 120},
+  pillContainer: {flexDirection: 'row'},
 });

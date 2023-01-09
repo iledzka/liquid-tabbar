@@ -13,34 +13,11 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import LiquidTabBar from './LiquidTabBar';
 import {SettingsScreen} from './SettingsScreen';
 import {BezierSlider} from './bezierSlider';
-import {
-  useClockValue,
-  Canvas,
-  Circle,
-  Group,
-  useComputedValue,
-} from '@shopify/react-native-skia';
 import HomeScreen from './HomeScreen';
+import ViewProfileScreen from './ViewProfile';
 
 function HeartScreen() {
   return <BezierSlider />;
-}
-
-const interval = 3000;
-
-function EyeScreen() {
-  const clock = useClockValue();
-  const opacity = useComputedValue(() => {
-    return (clock.current % interval) / interval;
-  }, [clock]);
-
-  return (
-    <Canvas style={{flex: 1, backgroundColor: '#fff'}}>
-      <Group>
-        <Circle r={100} cx={300} cy={300} color="black" opacity={opacity} />
-      </Group>
-    </Canvas>
-  );
 }
 
 function UserScreen() {
@@ -72,8 +49,12 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen
+            name="Eye"
+            component={ViewProfileScreen}
+            options={{headerShown: false}}
+          />
           <Tab.Screen name="Heart" component={HeartScreen} />
-          <Tab.Screen name="Eye" component={EyeScreen} />
           <Tab.Screen name="User" component={UserScreen} />
         </Tab.Navigator>
       </NavigationContainer>

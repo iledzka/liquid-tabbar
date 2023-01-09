@@ -1,41 +1,23 @@
 import React from 'react';
-import {Text, View, StyleSheet, type ViewStyle} from 'react-native';
-import {colors} from './utils';
-import textStyles from './text.styles';
+import {View, StyleSheet, type ViewStyle} from 'react-native';
 
-type Intensity = 1 | 2 | 3;
 type Props = {
-  name: string;
-  intensity: Intensity;
+  backgroundColor?: string;
+  children: JSX.Element[] | JSX.Element;
 };
 
-export default function Pill({name, intensity = 1}: Props) {
-  return (
-    <View style={styles.container}>
-      <Text style={[textStyles.subsubheader]}>{name}</Text>
-      <View style={styles.pill}>
-        {[1, 2, 3].map(i =>
-          i <= intensity ? (
-            <View style={[styles.dot, styles.dotActive]} />
-          ) : (
-            <View style={[styles.dot, styles.dotInactive]} />
-          ),
-        )}
-      </View>
-    </View>
-  );
+export default function Pill({children, backgroundColor}: Props) {
+  const pillStyle = backgroundColor
+    ? [styles.pill, {backgroundColor}]
+    : styles.pill;
+  return <View style={pillStyle}>{children}</View>;
 }
 
 type PillStyle = {
-  container: ViewStyle;
   pill: ViewStyle;
-  dot: ViewStyle;
-  dotActive: ViewStyle;
-  dotInactive: ViewStyle;
 };
 
 const styles = StyleSheet.create<PillStyle>({
-  container: {flexDirection: 'row', alignItems: 'center'},
   pill: {
     backgroundColor: 'white',
     flexDirection: 'row',
@@ -45,7 +27,4 @@ const styles = StyleSheet.create<PillStyle>({
     alignContent: 'center',
     padding: 7,
   },
-  dot: {borderRadius: 50, width: 6, height: 6, marginHorizontal: 2},
-  dotActive: {backgroundColor: colors.black},
-  dotInactive: {backgroundColor: colors.mediumGrey},
 });
