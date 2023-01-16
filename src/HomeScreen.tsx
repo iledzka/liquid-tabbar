@@ -163,12 +163,12 @@ const styles = StyleSheet.create<HomeScreenStyle>({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     paddingBottom: 200,
     opacity: 1,
   },
   saveAreaView: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   hero: {
     backgroundColor: colors.pink,

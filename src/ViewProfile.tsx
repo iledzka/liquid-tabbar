@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   Image,
+  StatusBar,
   type ViewStyle,
   type ImageStyle,
 } from 'react-native';
@@ -160,12 +161,12 @@ type ViewProfileScreenStyle = {
 const styles = StyleSheet.create<ViewProfileScreenStyle>({
   saveAreaView: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     paddingBottom: 200,
     opacity: 1,
   },

@@ -1,4 +1,6 @@
-# liquid-tabbar
+# Liquid Tabbar
+
+![](https://github.com/iledzka/liquid-tabbar/preview/preview.gif)
 
 Photo by <a href="https://unsplash.com/@erik_brolin?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Erik Brolin</a> on <a href="https://unsplash.com/images/sports/yoga?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
