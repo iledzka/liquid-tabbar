@@ -28,21 +28,31 @@ import {
   Selector,
 } from '@shopify/react-native-skia';
 import {colorsStrings} from './utils';
+import {type BottomTabBarProps} from '@react-navigation/bottom-tabs';
+import {useTransitionAnimation} from './ScreenTransitionAnimationProvider';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('screen');
 const RECT_Y = 70;
 const CIRCLE_RADIUS = 24;
 
-export default function MyTabBar({state, descriptors, navigation}) {
-  const [activeTab, setActiveTab] = React.useState<string>(
-    state.routes[state.index].name,
+type Tab = 'Home' | 'Settings' | 'Eye' | 'Heart' | 'User';
+
+export default function LiquidTabBar({state, navigation}: BottomTabBarProps) {
+  const [activeTab, setActiveTab] = React.useState<Tab>(
+    state.routes[state.index].name as Tab,
   );
+  const clickedTab = React.useRef<Tab>(state.routes[state.index].name as Tab);
+
+  const {setBlurTab} = useTransitionAnimation();
 
   const cy = RECT_Y + CIRCLE_RADIUS + 4;
-  const initialCoordinates = state.routes.reduce((acc, route, index) => {
+
+  const initialCoordinates = state.routes.reduce<
+    Record<Tab, {cy: number; cx: number}>
+  >((acc, route, index) => {
     const cx = spaceAroundCircleAt(index);
     return {...acc, [route.name]: {cx, cy}};
-  }, {});
+  }, {} as Record<Tab, {cy: number; cx: number}>);
 
   const translateY = useValue(cy);
   const interaction = useSharedValue(0);
@@ -62,24 +72,31 @@ export default function MyTabBar({state, descriptors, navigation}) {
   const getIndex = (name: string) =>
     state.routes.findIndex((route: {name: string}) => route.name === name);
 
-  const handlePressTab = (tab: string) => {
-    setActiveTab(tab);
-    if (!tab) {
-      return;
-    }
-    const index = getIndex(tab);
+  const handlePressTab = (tab: Tab) => {
+    if (clickedTab.current !== tab) {
+      setBlurTab(clickedTab.current);
 
-    const event = navigation.emit({
-      type: 'tabPress',
-      target: state.routes[index].key,
-      canPreventDefault: true,
-    });
-
-    if (!event.defaultPrevented) {
-      // The `merge: true` option makes sure that the params inside the tab screen are preserved
-      navigation.navigate({name: tab, merge: true});
+      setActiveTab(tab);
+      clickedTab.current = tab;
     }
   };
+
+  useSharedValueEffect(() => {
+    if (interaction.value === 1) {
+      const index = getIndex(clickedTab.current);
+
+      const event = navigation.emit({
+        type: 'tabPress',
+        target: state.routes[index].key,
+        canPreventDefault: true,
+      });
+
+      if (!event.defaultPrevented) {
+        // The `merge: true` option makes sure that the params inside the tab screen are preserved
+        navigation.navigate({key: state.routes[index].key, merge: true});
+      }
+    }
+  }, interaction);
 
   const onTouch = useTouchHandler({
     onStart: ({x, y}) => {
@@ -90,7 +107,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
       cancelAnimation(iconSizeInteraction);
 
       const tab = getPressedTab(x, y);
-      if (tab === '') {
+      if (!tab) {
         return;
       }
 
@@ -179,10 +196,9 @@ export default function MyTabBar({state, descriptors, navigation}) {
     for (const [name, {cx, cy}] of Object.entries(initialCoordinates)) {
       var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
       if (distancesquared <= CIRCLE_RADIUS * CIRCLE_RADIUS) {
-        return name;
+        return name as Tab;
       }
     }
-    return '';
   };
 
   useSharedValueEffect(
@@ -242,7 +258,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
   const svgHeartActive = useSVG(require('./assets/icons/heart-filled.svg'));
   const svgUserActive = useSVG(require('./assets/icons/user-filled.svg'));
 
-  const getIcon = (name: string) => {
+  const getIcon = (name: Tab) => {
     if (name === 'Home') {
       return activeTab === 'Home' ? svgHomeActive : svgHome;
     }
@@ -280,7 +296,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
   }, [circleScale]);
 
   const iconX = useComputedValue(() => {
-    const routeNames = Object.keys(initialCoordinates);
+    const routeNames = Object.keys(initialCoordinates) as Tab[];
 
     const scales = routeNames.map((key, i) => {
       if (!activeTab) {
@@ -322,7 +338,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
               <Group key={`group-${index}-${route.name}`}>
                 <Circle
                   key={`circle-${index}-${route.name}`}
-                  cx={initialCoordinates[route.name].cx}
+                  cx={initialCoordinates[route.name as Tab].cx}
                   cy={activeTab === route.name ? translateY : cy}
                   r={circleScale}
                   color={tabColor}
@@ -331,7 +347,7 @@ export default function MyTabBar({state, descriptors, navigation}) {
                   key={`rect-${index}-${route.name}`}
                   x={
                     activeTab == null
-                      ? initialCoordinates[route.name].cx
+                      ? initialCoordinates[route.name as Tab].cx
                       : roundedRectX
                   }
                   y={activeTab === route.name ? translateY : cy}
@@ -354,7 +370,8 @@ export default function MyTabBar({state, descriptors, navigation}) {
                   svg={icon}
                   x={
                     activeTab === route.name
-                      ? initialCoordinates[route.name].cx - 0.5 * CIRCLE_RADIUS
+                      ? initialCoordinates[route.name as Tab].cx -
+                        0.5 * CIRCLE_RADIUS
                       : Selector(iconX, x => x[index])
                   }
                   y={activeTab === route.name ? svgY : cy - 0.5 * CIRCLE_RADIUS}

@@ -14,73 +14,94 @@ import {colors} from './utils';
 import textStyles from './text.styles';
 import IntensityPill from './IntensityPill';
 import Icon from 'react-native-vector-icons/Feather';
+import Animated from 'react-native-reanimated';
+
+import {useTransitionAnimation} from './ScreenTransitionAnimationProvider';
+import {useIsFocused} from '@react-navigation/native';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('screen');
 
-export default function HomeScreen() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Icon
-        name="menu"
-        size={28}
-        color={colors.black}
-        style={styles.menuIcon}
-      />
-      <Text style={[textStyles.greyText, textStyles.h4, styles.sectionTitle]}>
-        Workout
-      </Text>
+export default function HomeScreen({route}) {
+  const {blurTab, animatedStyleBlur, animatedStyleFocus, PADDING_HORIZONTAL} =
+    useTransitionAnimation();
+  const isBlurred = blurTab === route.name;
 
-      <View style={styles.heroContainer}>
-        <View style={styles.heroShadow} />
-        <View style={styles.hero}>
-          <Text style={[textStyles.h1, styles.heroTitle]}>Athena</Text>
-          <Text style={[textStyles.subsubheader, textStyles.greyText]}>
-            Core, Lower
-          </Text>
-          <View style={styles.heroInfo}>
-            <View style={styles.pillContainer}>
-              <Text style={textStyles.subsubheader}>Duration</Text>
-              <IntensityPill intensity={1} />
-            </View>
-            <View style={styles.pillContainer}>
-              <Text style={textStyles.subsubheader}>Difficulty</Text>
-              <IntensityPill intensity={2} />
+  const isFocused = useIsFocused();
+
+  return (
+    <SafeAreaView style={styles.saveAreaView}>
+      <Animated.View
+        style={[
+          styles.container,
+          {paddingHorizontal: PADDING_HORIZONTAL},
+          isBlurred
+            ? animatedStyleBlur
+            : isFocused
+            ? animatedStyleFocus
+            : undefined,
+        ]}>
+        <Icon
+          name="menu"
+          size={28}
+          color={colors.black}
+          style={styles.menuIcon}
+        />
+        <Text style={[textStyles.greyText, textStyles.h4, styles.sectionTitle]}>
+          Workout
+        </Text>
+
+        <View style={styles.heroContainer}>
+          <View style={styles.heroShadow} />
+          <View style={styles.hero}>
+            <Text style={[textStyles.h1, styles.heroTitle]}>Athena</Text>
+            <Text style={[textStyles.subsubheader, textStyles.greyText]}>
+              Core, Lower
+            </Text>
+            <View style={styles.heroInfo}>
+              <View style={styles.pillContainer}>
+                <Text style={textStyles.subsubheader}>Duration</Text>
+                <IntensityPill intensity={1} />
+              </View>
+              <View style={styles.pillContainer}>
+                <Text style={textStyles.subsubheader}>Difficulty</Text>
+                <IntensityPill intensity={2} />
+              </View>
             </View>
           </View>
         </View>
-      </View>
 
-      <Text style={[textStyles.greyText, textStyles.h4, styles.sectionTitle]}>
-        Categories
-      </Text>
+        <Text style={[textStyles.greyText, textStyles.h4, styles.sectionTitle]}>
+          Categories
+        </Text>
 
-      <View style={styles.carousel}>
-        <View style={[styles.carouselItem, styles.carouselItemCardio]}>
-          <Text style={[textStyles.h3, styles.carouselItemText]}>Cardio</Text>
+        <View style={styles.carousel}>
+          <View style={[styles.carouselItem, styles.carouselItemCardio]}>
+            <Text style={[textStyles.h3, styles.carouselItemText]}>Cardio</Text>
 
-          <Image
-            style={styles.carouselImg}
-            source={require('./assets/images/cardio.png')}
-          />
+            <Image
+              style={styles.carouselImg}
+              source={require('./assets/images/cardio.png')}
+            />
+          </View>
+          <View style={[styles.carouselItem, styles.carouselItemFullBody]}>
+            <Text style={[textStyles.h3, styles.carouselItemText]}>
+              {'Full\nbody'}
+            </Text>
+            <Image
+              style={styles.carouselSmaller}
+              source={require('./assets/images/full-body.png')}
+            />
+          </View>
+          <View style={[styles.carouselItem, styles.carouselItemYoga]}>
+            <Text style={[textStyles.h3, styles.carouselItemText]}>Yoga</Text>
+
+            <Image
+              style={styles.carouselImg}
+              source={require('./assets/images/yoga.png')}
+            />
+          </View>
         </View>
-        <View style={[styles.carouselItem, styles.carouselItemFullBody]}>
-          <Text style={[textStyles.h3, styles.carouselItemText]}>
-            {'Full\nbody'}
-          </Text>
-          <Image
-            style={styles.carouselSmaller}
-            source={require('./assets/images/full-body.png')}
-          />
-        </View>
-        <View style={[styles.carouselItem, styles.carouselItemYoga]}>
-          <Text style={[textStyles.h3, styles.carouselItemText]}>Yoga</Text>
-
-          <Image
-            style={styles.carouselImg}
-            source={require('./assets/images/yoga.png')}
-          />
-        </View>
-      </View>
+      </Animated.View>
     </SafeAreaView>
   );
 }
@@ -103,6 +124,7 @@ type HomeScreenStyle = {
   carouselSmaller: ImageStyle;
   menuIcon: ViewStyle;
   pillContainer: ViewStyle;
+  saveAreaView: ViewStyle;
 };
 
 const styles = StyleSheet.create<HomeScreenStyle>({
@@ -143,6 +165,10 @@ const styles = StyleSheet.create<HomeScreenStyle>({
     alignItems: 'center',
     backgroundColor: '#fff',
     paddingBottom: 200,
+    opacity: 1,
+  },
+  saveAreaView: {
+    flex: 1,
   },
   hero: {
     backgroundColor: colors.pink,

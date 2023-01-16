@@ -12,6 +12,9 @@ import {colors} from './utils';
 import textStyles from './text.styles';
 import Pill from './Pill';
 import Icon from 'react-native-vector-icons/Feather';
+import Animated from 'react-native-reanimated';
+import {useIsFocused} from '@react-navigation/native';
+import {useTransitionAnimation} from './ScreenTransitionAnimationProvider';
 
 function ChartItem({
   height,
@@ -36,86 +39,103 @@ function ChartItem({
   );
 }
 
-export default function ViewProfileScreen() {
+export default function ViewProfileScreen({route}) {
+  const isFocused = useIsFocused();
+  const {blurTab, animatedStyleBlur, animatedStyleFocus, PADDING_HORIZONTAL} =
+    useTransitionAnimation();
+  const isBlurred = blurTab === route.name;
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Icon
-          name="chevron-left"
-          size={28}
-          color={colors.black}
-          style={styles.chevronIcon}
-        />
-        <Pill backgroundColor={colors.blue}>
-          <View style={styles.headerPill}>
-            <Icon
-              name="check"
-              size={16}
-              color={colors.black}
-              style={styles.checkIcon}
-            />
-            <Text style={textStyles.paragraph}>Friends</Text>
-          </View>
-        </Pill>
-      </View>
-      <View style={styles.profileSection}>
-        <View style={styles.profilePic}>
-          <Image
-            style={styles.profilePhoto}
-            source={require('./assets/images/brunonek.png')}
+    <SafeAreaView style={styles.saveAreaView}>
+      <Animated.View
+        style={[
+          styles.container,
+          {paddingHorizontal: PADDING_HORIZONTAL},
+          isBlurred
+            ? animatedStyleBlur
+            : isFocused
+            ? animatedStyleFocus
+            : undefined,
+        ]}>
+        <View style={styles.header}>
+          <Icon
+            name="chevron-left"
+            size={28}
+            color={colors.black}
+            style={styles.chevronIcon}
           />
+          <Pill backgroundColor={colors.blue}>
+            <View style={styles.headerPill}>
+              <Icon
+                name="check"
+                size={16}
+                color={colors.black}
+                style={styles.checkIcon}
+              />
+              <Text style={textStyles.paragraph}>Friends</Text>
+            </View>
+          </Pill>
         </View>
-        <Text style={textStyles.h3}>{'Boris\nBrunowsky'}</Text>
-      </View>
-      <View style={styles.chartHeaderContainer}>
-        <View style={styles.chartHeader}>
-          <Text style={[textStyles.subheader]}>Days</Text>
-          <Text style={[textStyles.greyText, textStyles.subheader]}>
-            Months
+        <View style={styles.profileSection}>
+          <View style={styles.profilePic}>
+            <Image
+              style={styles.profilePhoto}
+              source={require('./assets/images/brunonek.png')}
+            />
+          </View>
+          <Text style={textStyles.h3}>{'Boris\nBrunowsky'}</Text>
+        </View>
+        <View style={styles.chartHeaderContainer}>
+          <View style={styles.chartHeader}>
+            <Text style={[textStyles.subheader]}>Days</Text>
+            <Text style={[textStyles.greyText, textStyles.subheader]}>
+              Months
+            </Text>
+          </View>
+          <Text style={[textStyles.greyText, textStyles.subsubheader]}>
+            (visits in mins)
           </Text>
         </View>
-        <Text style={[textStyles.greyText, textStyles.subsubheader]}>
-          (visits in mins)
-        </Text>
-      </View>
-      <View style={styles.chart}>
-        <ChartItem height={55} date="28.04" color={colors.blue} />
-        <ChartItem height={58} date="30.04" color={colors.blue} />
-        <ChartItem height={45} date="01.04" color={colors.pink} />
-        <ChartItem height={31} date="05.04" color={colors.pink} />
-        <ChartItem height={60} date="28.04" color={colors.blue} />
-        <ChartItem height={50} date="30.04" color={colors.blue} />
-        <ChartItem height={45} date="01.04" color={colors.pink} />
-        <ChartItem height={25} date="05.04" color={colors.pink} />
-      </View>
-      <View style={styles.hero}>
-        <View style={styles.diagonalOverlay} />
-        <View style={styles.heroInner}>
-          <View style={styles.heroInfo}>
-            <View style={styles.heroPoints}>
-              <Text style={textStyles.h2}>957</Text>
-              <View style={styles.pointsPill}>
-                <Text style={textStyles.subheader}>+2</Text>
+        <View style={styles.chart}>
+          <ChartItem height={55} date="28.04" color={colors.blue} />
+          <ChartItem height={58} date="30.04" color={colors.blue} />
+          <ChartItem height={45} date="01.04" color={colors.pink} />
+          <ChartItem height={31} date="05.04" color={colors.pink} />
+          <ChartItem height={60} date="28.04" color={colors.blue} />
+          <ChartItem height={50} date="30.04" color={colors.blue} />
+          <ChartItem height={45} date="01.04" color={colors.pink} />
+          <ChartItem height={25} date="05.04" color={colors.pink} />
+        </View>
+        <View style={styles.hero}>
+          <View style={styles.diagonalOverlay} />
+          <View style={styles.heroInner}>
+            <View style={styles.heroInfo}>
+              <View style={styles.heroPoints}>
+                <Text style={textStyles.h2}>957</Text>
+                <View style={styles.pointsPill}>
+                  <Text style={textStyles.subheader}>+2</Text>
+                </View>
               </View>
+              <Text style={[textStyles.greyText, textStyles.h4]}>place</Text>
             </View>
-            <Text style={[textStyles.greyText, textStyles.h4]}>place</Text>
-          </View>
-          <View style={styles.heroInfo}>
-            <View style={styles.heroPoints}>
-              <Text style={textStyles.h2}>8500</Text>
-              <View style={styles.pointsPill}>
-                <Text style={textStyles.subheader}>+200</Text>
+            <View style={styles.heroInfo}>
+              <View style={styles.heroPoints}>
+                <Text style={textStyles.h2}>8500</Text>
+                <View style={styles.pointsPill}>
+                  <Text style={textStyles.subheader}>+200</Text>
+                </View>
               </View>
+              <Text style={[textStyles.greyText, textStyles.h4]}>points</Text>
             </View>
-            <Text style={[textStyles.greyText, textStyles.h4]}>points</Text>
           </View>
         </View>
-      </View>
+      </Animated.View>
     </SafeAreaView>
   );
 }
 
 type ViewProfileScreenStyle = {
+  saveAreaView: ViewStyle;
   container: ViewStyle;
   chevronIcon: ViewStyle;
   checkIcon: ViewStyle;
@@ -138,13 +158,16 @@ type ViewProfileScreenStyle = {
 };
 
 const styles = StyleSheet.create<ViewProfileScreenStyle>({
+  saveAreaView: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
     paddingBottom: 200,
-    paddingHorizontal: 20,
+    opacity: 1,
   },
   header: {
     flexDirection: 'row',
