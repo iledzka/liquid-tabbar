@@ -308,32 +308,32 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-skia (0.1.165):
+  - react-native-skia (0.1.171):
     - React
     - React-callinvoker
     - React-Core
-    - react-native-skia/Api (= 0.1.165)
-    - react-native-skia/Jsi (= 0.1.165)
-    - react-native-skia/RNSkia (= 0.1.165)
-    - react-native-skia/SkiaHeaders (= 0.1.165)
-    - react-native-skia/Utils (= 0.1.165)
-  - react-native-skia/Api (0.1.165):
+    - react-native-skia/Api (= 0.1.171)
+    - react-native-skia/Jsi (= 0.1.171)
+    - react-native-skia/RNSkia (= 0.1.171)
+    - react-native-skia/SkiaHeaders (= 0.1.171)
+    - react-native-skia/Utils (= 0.1.171)
+  - react-native-skia/Api (0.1.171):
     - React
     - React-callinvoker
     - React-Core
-  - react-native-skia/Jsi (0.1.165):
+  - react-native-skia/Jsi (0.1.171):
     - React
     - React-callinvoker
     - React-Core
-  - react-native-skia/RNSkia (0.1.165):
+  - react-native-skia/RNSkia (0.1.171):
     - React
     - React-callinvoker
     - React-Core
-  - react-native-skia/SkiaHeaders (0.1.165):
+  - react-native-skia/SkiaHeaders (0.1.171):
     - React
     - React-callinvoker
     - React-Core
-  - react-native-skia/Utils (0.1.165):
+  - react-native-skia/Utils (0.1.171):
     - React
     - React-callinvoker
     - React-Core
@@ -405,9 +405,7 @@ PODS:
     - React-perflogger (= 0.70.6)
   - RNCMaskedView (0.2.8):
     - React-Core
-  - RNGestureHandler (2.8.0):
-    - React-Core
-  - RNReanimated (2.13.0):
+  - RNReanimated (2.14.2):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -437,9 +435,7 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.6.0):
-    - React-Core
-  - RNVectorIcons (9.2.0):
+  - RNSVG (13.7.0):
     - React-Core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
@@ -508,11 +504,9 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
-  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -606,16 +600,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
-  RNGestureHandler:
-    :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -654,8 +644,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b4a65947391c658450151275aa406f2b8263178f
   React-jsinspector: 60769e5a0a6d4b32294a2456077f59d0266f9a8b
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
-  react-native-safe-area-context: ec0d85aca8110dae9327430a9541fec165352dab
-  react-native-skia: 34c85b9219228e1628ce70202a923b55ccfa227d
+  react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
+  react-native-skia: 8fdae2025034c817aea3a89d02b807ff444817be
   React-perflogger: 8c79399b0500a30ee8152d0f9f11beae7fc36595
   React-RCTActionSheet: 7316773acabb374642b926c19aef1c115df5c466
   React-RCTAnimation: 5341e288375451297057391227f691d9b2326c3d
@@ -668,12 +658,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: c75ceef7aa60a33b2d5731ebe5800ddde40cefc4
   React-runtimeexecutor: 15437b576139df27635400de0599d9844f1ab817
   ReactCommon: 349be31adeecffc7986a0de875d7fb0dcf4e251c
-  RNCMaskedView: 1f6cd0cb5e38ec01960e12fd8f95ecad809f8fbb
-  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
-  RNReanimated: ce445c233a6ff5600223484a88ad5704945d972a
+  RNCMaskedView: bc0170f389056201c82a55e242e5d90070e18e5a
+  RNReanimated: 3ed15d2c7d7fd9d9a284de291a1e347d132d282b
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSVG: 3a79c0c4992213e4f06c08e62730c5e7b9e4dc17
-  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
+  RNSVG: d787d64ca06b9158e763ad2638a8c4edce00782a
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

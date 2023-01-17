@@ -2,7 +2,9 @@
 
 ![](preview/preview.gif)
 
-A project aiming to reacte [Liquid TabBar by Cuberto Design](https://github.com/Cuberto/liquid-tabbar) using [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) and [React Native Skia](https://shopify.github.io/react-native-skia/). 
+A project aiming to reacte [Liquid TabBar by Cuberto Design](https://github.com/Cuberto/liquid-tabbar) using [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) and [React Native Skia](https://shopify.github.io/react-native-skia/).
+
+![](preview/previewlong.gif)
 
 ## Credits 🌸 🌺
 

@@ -16,9 +16,10 @@
 		1533EBB53D5246DD87DE7721 /* Montserrat-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 492D88FA1D6149F9BB722E9B /* Montserrat-ExtraBoldItalic.ttf */; };
 		16FEDC21DBB14D65B9557BD8 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA5F82BEF9B94F11A8162973 /* Montserrat-ExtraBold.ttf */; };
 		33CF0AED462748BC9690A4BF /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B307785F2D594F95AB3B5355 /* Montserrat-ExtraLight.ttf */; };
+		3D99C12454939B8583933E21 /* libPods-TabBarLiquid-TabBarLiquidTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4560EEC621D02B0A8F2C0A /* libPods-TabBarLiquid-TabBarLiquidTests.a */; };
 		44B32B4A0EEE435098ABA0BC /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 174E483C3B54455CB5EDE60E /* Montserrat-SemiBold.ttf */; };
+		44C48977A39787DD0409011B /* libPods-TabBarLiquid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1220C7256E55DE4ABD06D91 /* libPods-TabBarLiquid.a */; };
 		538E2FF0B7724E39805A4B60 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 757A55D22FF341979C5DB852 /* Montserrat-Black.ttf */; };
-		54705EE4B41247F7EF430EEF /* libPods-TabBarLiquid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642E34A3D83CA8FA30CF431E /* libPods-TabBarLiquid.a */; };
 		76D1596187E046C9BBC4D965 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF9C278ECCF44D2CBE11DDFB /* Montserrat-Light.ttf */; };
 		77E547F074AF4D8186BBA849 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D8FCCE978C647EA969E46C2 /* Montserrat-Medium.ttf */; };
 		7CD354D945AD455481C988E5 /* Montserrat-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59DEB4A0C1B0456595F7D52B /* Montserrat-ExtraLightItalic.ttf */; };
@@ -31,7 +32,7 @@
 		C8B13752519D4596B552A16B /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05C05C09697B4723ACB23A99 /* Montserrat-Thin.ttf */; };
 		D3806F77D210459695548F53 /* Montserrat-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41504A413769456C8DDDAAC3 /* Montserrat-LightItalic.ttf */; };
 		DA15C383A51640FFB4332D34 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B650E22DD3544BA5AC3C466A /* Montserrat-BoldItalic.ttf */; };
-		F4E9FE02593DB9DC408E85B5 /* libPods-TabBarLiquid-TabBarLiquidTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021B19CA5287A0897D06E97D /* libPods-TabBarLiquid-TabBarLiquidTests.a */; };
+		FEBED06B29773A870002A9F5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE39A15C2944A9FC00A2DA06 /* Feather.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,9 +49,7 @@
 		00E356EE1AD99517003FC87E /* TabBarLiquidTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabBarLiquidTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* TabBarLiquidTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabBarLiquidTests.m; sourceTree = "<group>"; };
-		021B19CA5287A0897D06E97D /* libPods-TabBarLiquid-TabBarLiquidTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TabBarLiquid-TabBarLiquidTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05C05C09697B4723ACB23A99 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
-		0E5C4623A585130FF2F3B1E4 /* Pods-TabBarLiquid.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid.debug.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid/Pods-TabBarLiquid.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* TabBarLiquid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabBarLiquid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TabBarLiquid/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = TabBarLiquid/AppDelegate.mm; sourceTree = "<group>"; };
@@ -63,24 +62,26 @@
 		2F141F51590049E2BA93A10A /* Montserrat-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BlackItalic.ttf"; path = "../src/assets/fonts/Montserrat-BlackItalic.ttf"; sourceTree = "<group>"; };
 		41504A413769456C8DDDAAC3 /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-LightItalic.ttf"; path = "../src/assets/fonts/Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
 		492D88FA1D6149F9BB722E9B /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		4D46026ABE2CF80817E474AB /* Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid-TabBarLiquidTests/Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig"; sourceTree = "<group>"; };
 		59DEB4A0C1B0456595F7D52B /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLightItalic.ttf"; path = "../src/assets/fonts/Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		642E34A3D83CA8FA30CF431E /* libPods-TabBarLiquid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TabBarLiquid.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		69E8E159B893430F8D9D8C7C /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		6E4560EEC621D02B0A8F2C0A /* libPods-TabBarLiquid-TabBarLiquidTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TabBarLiquid-TabBarLiquidTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		757A55D22FF341979C5DB852 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Black.ttf"; path = "../src/assets/fonts/Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		79910406C5F49709A92E3F7C /* Pods-TabBarLiquid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid.release.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid/Pods-TabBarLiquid.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TabBarLiquid/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		953A0C5F0BC6467CBFBC0A4D /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ThinItalic.ttf"; path = "../src/assets/fonts/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
 		B307785F2D594F95AB3B5355 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLight.ttf"; path = "../src/assets/fonts/Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
-		B44A7E2245B87F338642F1CA /* Pods-TabBarLiquid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid.release.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid/Pods-TabBarLiquid.release.xcconfig"; sourceTree = "<group>"; };
 		B650E22DD3544BA5AC3C466A /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
 		BF9C278ECCF44D2CBE11DDFB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		CC237808D4644E999D90B05D /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../src/assets/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
+		CD4FBFA5AB8B9C3083E86C45 /* Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid-TabBarLiquidTests/Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF63507A5A044D3BBC24B575 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		D1220C7256E55DE4ABD06D91 /* libPods-TabBarLiquid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TabBarLiquid.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E2C3B0A7304BF3BDCAA83B /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic.ttf"; path = "../src/assets/fonts/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
-		D77973C37C73CD30846C6A77 /* Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid-TabBarLiquidTests/Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA5F82BEF9B94F11A8162973 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBold.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FB9CC235154A3A21FC4A8867 /* Pods-TabBarLiquid.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid.debug.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid/Pods-TabBarLiquid.debug.xcconfig"; sourceTree = "<group>"; };
 		FE39A15C2944A9FC00A2DA06 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
-		FFAA9C3775577DCD552E82D1 /* Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig"; path = "Target Support Files/Pods-TabBarLiquid-TabBarLiquidTests/Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4E9FE02593DB9DC408E85B5 /* libPods-TabBarLiquid-TabBarLiquidTests.a in Frameworks */,
+				3D99C12454939B8583933E21 /* libPods-TabBarLiquid-TabBarLiquidTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54705EE4B41247F7EF430EEF /* libPods-TabBarLiquid.a in Frameworks */,
+				44C48977A39787DD0409011B /* libPods-TabBarLiquid.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				642E34A3D83CA8FA30CF431E /* libPods-TabBarLiquid.a */,
-				021B19CA5287A0897D06E97D /* libPods-TabBarLiquid-TabBarLiquidTests.a */,
+				D1220C7256E55DE4ABD06D91 /* libPods-TabBarLiquid.a */,
+				6E4560EEC621D02B0A8F2C0A /* libPods-TabBarLiquid-TabBarLiquidTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -204,10 +205,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0E5C4623A585130FF2F3B1E4 /* Pods-TabBarLiquid.debug.xcconfig */,
-				B44A7E2245B87F338642F1CA /* Pods-TabBarLiquid.release.xcconfig */,
-				D77973C37C73CD30846C6A77 /* Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig */,
-				FFAA9C3775577DCD552E82D1 /* Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig */,
+				FB9CC235154A3A21FC4A8867 /* Pods-TabBarLiquid.debug.xcconfig */,
+				79910406C5F49709A92E3F7C /* Pods-TabBarLiquid.release.xcconfig */,
+				4D46026ABE2CF80817E474AB /* Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig */,
+				CD4FBFA5AB8B9C3083E86C45 /* Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -228,12 +229,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TabBarLiquidTests" */;
 			buildPhases = (
-				2315F6F348F3E36E54A9B354 /* [CP] Check Pods Manifest.lock */,
+				86C9760AC40FF2C2044D35E5 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				CAB2F24F8C57FA956ACECBB8 /* [CP] Embed Pods Frameworks */,
-				9AE8181C3C71B980CEAD70ED /* [CP] Copy Pods Resources */,
+				F5230EFE50BD6C53E14F6BDF /* [CP] Embed Pods Frameworks */,
+				D5BDDCE38A6F364DF5743503 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -249,14 +250,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TabBarLiquid" */;
 			buildPhases = (
-				D64D70E8C449A525713C351B /* [CP] Check Pods Manifest.lock */,
+				F8EA7E0DB51D0A250DB1FE2E /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5AF09E1A98FD62EA6AD03D8B /* [CP] Embed Pods Frameworks */,
-				97D001F8AD2EB29E6CF7CDA9 /* [CP] Copy Pods Resources */,
+				B68940E4E8FCC0F75403680E /* [CP] Embed Pods Frameworks */,
+				CC20C26F76D3147033F8A1BD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -315,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEBED06B29773A870002A9F5 /* Feather.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				538E2FF0B7724E39805A4B60 /* Montserrat-Black.ttf in Resources */,
@@ -357,7 +359,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		2315F6F348F3E36E54A9B354 /* [CP] Check Pods Manifest.lock */ = {
+		86C9760AC40FF2C2044D35E5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -379,7 +381,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5AF09E1A98FD62EA6AD03D8B /* [CP] Embed Pods Frameworks */ = {
+		B68940E4E8FCC0F75403680E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -396,7 +398,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabBarLiquid/Pods-TabBarLiquid-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		97D001F8AD2EB29E6CF7CDA9 /* [CP] Copy Pods Resources */ = {
+		CC20C26F76D3147033F8A1BD /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -413,7 +415,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabBarLiquid/Pods-TabBarLiquid-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9AE8181C3C71B980CEAD70ED /* [CP] Copy Pods Resources */ = {
+		D5BDDCE38A6F364DF5743503 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -430,7 +432,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabBarLiquid-TabBarLiquidTests/Pods-TabBarLiquid-TabBarLiquidTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CAB2F24F8C57FA956ACECBB8 /* [CP] Embed Pods Frameworks */ = {
+		F5230EFE50BD6C53E14F6BDF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -447,7 +449,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabBarLiquid-TabBarLiquidTests/Pods-TabBarLiquid-TabBarLiquidTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D64D70E8C449A525713C351B /* [CP] Check Pods Manifest.lock */ = {
+		F8EA7E0DB51D0A250DB1FE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -521,7 +523,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D77973C37C73CD30846C6A77 /* Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig */;
+			baseConfigurationReference = 4D46026ABE2CF80817E474AB /* Pods-TabBarLiquid-TabBarLiquidTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -548,7 +550,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FFAA9C3775577DCD552E82D1 /* Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig */;
+			baseConfigurationReference = CD4FBFA5AB8B9C3083E86C45 /* Pods-TabBarLiquid-TabBarLiquidTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -572,13 +574,14 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E5C4623A585130FF2F3B1E4 /* Pods-TabBarLiquid.debug.xcconfig */;
+			baseConfigurationReference = FB9CC235154A3A21FC4A8867 /* Pods-TabBarLiquid.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EM6DC2K3NS;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				INFOPLIST_FILE = TabBarLiquid/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -599,12 +602,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B44A7E2245B87F338642F1CA /* Pods-TabBarLiquid.release.xcconfig */;
+			baseConfigurationReference = 79910406C5F49709A92E3F7C /* Pods-TabBarLiquid.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EM6DC2K3NS;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 arm64";
 				INFOPLIST_FILE = TabBarLiquid/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -655,7 +659,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -727,7 +731,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 arm64";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

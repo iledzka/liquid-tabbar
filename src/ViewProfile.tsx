@@ -4,7 +4,6 @@ import {
   View,
   StyleSheet,
   Image,
-  StatusBar,
   type ViewStyle,
   type ImageStyle,
 } from 'react-native';
@@ -88,7 +87,7 @@ export default function ViewProfileScreen({route}) {
         </View>
         <View style={styles.chartHeaderContainer}>
           <View style={styles.chartHeader}>
-            <Text style={[textStyles.subheader]}>Days</Text>
+            <Text style={textStyles.subheader}>Days</Text>
             <Text style={[textStyles.greyText, textStyles.subheader]}>
               Months
             </Text>

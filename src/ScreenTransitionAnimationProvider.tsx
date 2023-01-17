@@ -52,6 +52,7 @@ const ScreenTransitionAnimationProvider = ({
         }),
         withSpring(0),
       ),
+      opacity: withSpring(1),
     };
   });
 
